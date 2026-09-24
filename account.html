@@ -26,16 +26,9 @@
       justify-content: space-between;
     }
 
-    header .logo img {
-      height: 48px;
-      width: auto;
-    }
+    header .logo img { height: 48px; width: auto; }
 
-    header .social-icons {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
+    header .social-icons { display: flex; gap: 12px; align-items: center; }
 
     header .social-icons a img {
       height: 50px;
@@ -55,7 +48,7 @@
       gap: 24px;
     }
 
-    /* PROFILE CARD */
+    /* CARDS */
     .card {
       background-color: #1e1e1e;
       border-radius: 10px;
@@ -66,25 +59,11 @@
       color: white;
     }
 
-    .card h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .card .email {
-      color: #aaa;
-      font-size: 0.9rem;
-      margin-bottom: 24px;
-    }
+    .card h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; }
+    .card .email { color: #aaa; font-size: 0.9rem; margin-bottom: 24px; }
 
     /* STATS ROW */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 8px;
-    }
+    .stats { display: flex; justify-content: center; gap: 32px; margin-top: 8px; }
 
     .stat-box {
       background-color: #2a2a2a;
@@ -93,19 +72,10 @@
       text-align: center;
     }
 
-    .stat-box .stat-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #c0b3e8;
-    }
+    .stat-box .stat-value { font-size: 1.8rem; font-weight: 700; color: #c0b3e8; }
+    .stat-box .stat-label { font-size: 0.8rem; color: #aaa; margin-top: 4px; }
 
-    .stat-box .stat-label {
-      font-size: 0.8rem;
-      color: #aaa;
-      margin-top: 4px;
-    }
-
-    /* SCORES TABLE */
+    /* TABLES */
     .card h2 {
       font-size: 1.1rem;
       font-weight: 600;
@@ -114,41 +84,22 @@
       text-align: left;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.9rem;
-    }
-
-    thead tr {
-      border-bottom: 1px solid #444;
-    }
-
-    thead th {
-      color: #aaa;
-      font-weight: 500;
-      padding: 8px 12px;
-      text-align: left;
-    }
-
-    tbody tr {
-      border-bottom: 1px solid #2a2a2a;
-      transition: background-color 0.15s;
-    }
-
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    thead tr { border-bottom: 1px solid #444; }
+    thead th { color: #aaa; font-weight: 500; padding: 8px 12px; text-align: left; }
+    tbody tr { border-bottom: 1px solid #2a2a2a; transition: background-color 0.15s; }
     tbody tr:hover { background-color: #2a2a2a; }
+    tbody td { padding: 10px 12px; color: #ddd; }
 
-    tbody td {
-      padding: 10px 12px;
-      color: #ddd;
-    }
+    .no-scores { color: #aaa; font-size: 0.9rem; text-align: center; padding: 20px 0; }
 
-    .no-scores {
-      color: #aaa;
-      font-size: 0.9rem;
-      text-align: center;
-      padding: 20px 0;
-    }
+    /* GOLD / SILVER / BRONZE */
+    .rank-1 { color: #FFD700; font-weight: 700; }
+    .rank-2 { color: #C0C0C0; font-weight: 700; }
+    .rank-3 { color: #CD7F32; font-weight: 700; }
+
+    /* HIGHLIGHT current player in leaderboard */
+    .you-row td { color: #c0b3e8; font-weight: 600; }
 
     /* LOGOUT BUTTON */
     .btn-logout {
@@ -167,24 +118,11 @@
     .btn-logout:hover { background-color: #7d70b0; }
 
     /* NOT LOGGED IN */
-    .not-logged-in {
-      color: #333;
-      text-align: center;
-      margin-top: 40px;
-    }
-
-    .not-logged-in a {
-      color: #4a3f6b;
-      text-decoration: underline;
-    }
+    .not-logged-in { color: #333; text-align: center; margin-top: 40px; }
+    .not-logged-in a { color: #4a3f6b; text-decoration: underline; }
 
     /* LOADING */
-    .loading {
-      color: #555;
-      text-align: center;
-      margin-top: 60px;
-      font-size: 1rem;
-    }
+    .loading { color: #555; text-align: center; margin-top: 60px; font-size: 1rem; }
 
     /* FOOTER */
     footer {
@@ -197,11 +135,7 @@
       align-items: center;
     }
 
-    footer a {
-      color: #ccc;
-      text-decoration: none;
-    }
-
+    footer a { color: #ccc; text-decoration: none; }
     footer a:hover { color: white; }
   </style>
 </head>
@@ -260,7 +194,6 @@
     onAuthStateChanged(auth, async (user) => {
       const main = document.getElementById("main-content");
 
-      // Not logged in — redirect to login
       if (!user) {
         main.innerHTML = `
           <div class="not-logged-in">
@@ -270,51 +203,72 @@
         return;
       }
 
-      // Fetch this player's scores from Firestore
       const scoresRef = collection(db, "scores");
-      const q = query(
+
+      // Fetch player's own scores
+      const myScoresQuery = query(
         scoresRef,
         where("userId", "==", user.uid),
         orderBy("score", "desc"),
         limit(10)
       );
 
-      const snapshot = await getDocs(q);
-      const scores = [];
-      snapshot.forEach(doc => scores.push(doc.data()));
+      // Fetch global top 10
+      const leaderboardQuery = query(
+        scoresRef,
+        orderBy("score", "desc"),
+        limit(10)
+      );
 
-      // Work out personal best and global rank
-      const personalBest = scores.length > 0 ? scores[0].score : "N/A";
+      const [mySnapshot, leaderboardSnapshot] = await Promise.all([
+        getDocs(myScoresQuery),
+        getDocs(leaderboardQuery)
+      ]);
 
-      // Get global rank
+      const myScores = [];
+      mySnapshot.forEach(doc => myScores.push(doc.data()));
+
+      const leaderboard = [];
+      leaderboardSnapshot.forEach(doc => leaderboard.push(doc.data()));
+
+      // Personal best and global rank
+      const personalBest = myScores.length > 0 ? myScores[0].score : "N/A";
       let globalRank = "N/A";
-      if (scores.length > 0) {
-        const allScoresQuery = query(scoresRef, orderBy("score", "desc"));
-        const allSnapshot = await getDocs(allScoresQuery);
-        let rank = 1;
-        let found = false;
-        allSnapshot.forEach(doc => {
-          if (!found) {
-            if (doc.data().userId === user.uid) {
-              globalRank = rank;
-              found = true;
-            }
-            rank++;
-          }
-        });
-      }
+      leaderboard.forEach((entry, i) => {
+        if (entry.userId === user.uid && globalRank === "N/A") {
+          globalRank = i + 1;
+        }
+      });
 
-      // Build scores table rows
-      const scoreRows = scores.length > 0
-        ? scores.map((s, i) => `
+      // My scores rows
+      const scoreRows = myScores.length > 0
+        ? myScores.map((s, i) => `
             <tr>
               <td>${i + 1}</td>
               <td>${s.score}</td>
               <td>${s.timestamp ? new Date(s.timestamp.seconds * 1000).toLocaleDateString() : "—"}</td>
             </tr>`).join("")
-        : `<tr><td colspan="3" class="no-scores">No scores yet – go play!</td></tr>`;
+        : `<tr><td colspan="3" class="no-scores">No scores yet — go play!</td></tr>`;
 
-      // Render the account page
+      // Leaderboard rows
+      const medalMap = { 1: "🥇", 2: "🥈", 3: "🥉" };
+      const rankClass = { 1: "rank-1", 2: "rank-2", 3: "rank-3" };
+
+      const leaderboardRows = leaderboard.length > 0
+        ? leaderboard.map((entry, i) => {
+            const rank = i + 1;
+            const isYou = entry.userId === user.uid;
+            const medal = medalMap[rank] || rank;
+            const cls = rankClass[rank] || "";
+            return `
+              <tr class="${isYou ? "you-row" : ""}">
+                <td class="${cls}">${medal}</td>
+                <td>${entry.username || "Player"}${isYou ? " <span style='color:#c0b3e8;font-size:0.75rem'>(you)</span>" : ""}</td>
+                <td>${entry.score}</td>
+              </tr>`;
+          }).join("")
+        : `<tr><td colspan="3" class="no-scores">No scores yet — be the first!</td></tr>`;
+
       main.innerHTML = `
         <div class="card">
           <h1>👾 ${user.displayName || "Player"}</h1>
@@ -333,7 +287,21 @@
         </div>
 
         <div class="card">
-          <h2>Recent Scores</h2>
+          <h2>🏆 Global Leaderboard</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Player</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>${leaderboardRows}</tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>My Recent Scores</h2>
           <table>
             <thead>
               <tr>
@@ -342,9 +310,7 @@
                 <th>Date</th>
               </tr>
             </thead>
-            <tbody>
-              ${scoreRows}
-            </tbody>
+            <tbody>${scoreRows}</tbody>
           </table>
         </div>`;
     });
