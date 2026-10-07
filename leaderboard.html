@@ -28,6 +28,12 @@
 
     header .logo img { height: 48px; width: auto; }
 
+    header nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
     header nav a {
       color: #EBE6FE;
       text-decoration: none;
@@ -164,6 +170,7 @@
     </div>
     <nav>
       <a href="https://astrafallgame.wixsite.com/astrafall">Back to main site</a>
+      <a id="nav-account-link" href="login.html">Log In</a>
     </nav>
   </header>
 
@@ -210,6 +217,13 @@
 
     onAuthStateChanged(auth, async (user) => {
       const main = document.getElementById("main-content");
+
+      // Update nav link
+      const navLink = document.getElementById("nav-account-link");
+      if (user) {
+        navLink.textContent = "My Account";
+        navLink.href = "account.html";
+      }
 
       const scoresRef = collection(db, "scores");
       const leaderboardQuery = query(scoresRef, orderBy("score", "desc"), limit(10));
