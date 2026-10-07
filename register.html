@@ -19,8 +19,8 @@
 
     /* HEADER */
     header {
-      background-color: #4a3f6b;
-      padding: 28px 40px;
+      background-color: #4A3F75;
+      padding: 12px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -31,21 +31,16 @@
       width: auto;
     }
 
-    header .social-icons {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    header .social-icons a img {
-      height: 50px;
-      width: 50px;
+    header nav a {
+      color: #EBE6FE;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.85;
       transition: opacity 0.2s;
     }
 
-    header .social-icons a img:hover {
-      opacity: 0.8;
-    }
+    header nav a:hover { opacity: 1; }
 
     /* MAIN */
     main {
@@ -132,21 +127,54 @@
 
     /* FOOTER */
     footer {
-      background-color: #221D3B;
+      background-color: #4A3F75;
       color: #EBE6FE;
-      padding: 16px 20px;
-      font-size: 1.35rem;
-      display: flex;
-      justify-content: space-between;
+      padding: 35px 32px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
     }
 
-    footer a {
-      color: #ccc;
-      text-decoration: none;
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 1.1rem;
     }
 
-    footer a:hover { color: white; }
+    .footer-left p { margin: 0; }
+
+    .footer-left a {
+      color: #c0b3e8;
+      text-decoration: underline;
+    }
+
+    .footer-left a:hover { color: white; }
+
+    .footer-centre {
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-centre img.aston-logo {
+      height: 70px;
+      width: auto;
+    }
+
+    .footer-right {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .footer-right a img {
+      height: 45px;
+      width: 45px;
+      transition: opacity 0.2s;
+    }
+
+    .footer-right a img:hover { opacity: 0.8; }
   </style>
 </head>
 <body>
@@ -158,17 +186,9 @@
         <img src="ASTRAFALL.png" alt="Astrafall" />
       </a>
     </div>
-    <div class="social-icons">
-      <a href="https://www.instagram.com/astrafallgame/" target="_blank">
-        <img src="Instagram.png" alt="Instagram" />
-      </a>
-      <a href="https://www.tiktok.com/@astrafallgame" target="_blank">
-        <img src="TikTok.png" alt="TikTok" />
-      </a>
-      <a href="https://www.youtube.com/@AstrafallGame" target="_blank">
-        <img src="YouTube.png" alt="YouTube" />
-      </a>
-    </div>
+    <nav>
+      <a href="https://astrafallgame.wixsite.com/astrafall">Back to main site</a>
+    </nav>
   </header>
 
   <!-- MAIN -->
@@ -193,8 +213,19 @@
 
   <!-- FOOTER -->
   <footer>
-    <span>Aston University, Aston Street, Birmingham, B4 7ET</span>
-    <span>Contact us: <a href="mailto:astrafallgame@gmail.com">astrafallgame@gmail.com</a></span>
+    <div class="footer-left">
+      <p>Contact us: <a href="mailto:astrafallgame@gmail.com">astrafallgame@gmail.com</a></p>
+      <p>Any feedback? Submit using <a href="https://docs.google.com/forms/d/e/1FAIpQLSd8h1hhttJ3dvBng5Irh0YHAskvVpTKRvUtRrV3P8G84GuV3Q/viewform" target="_blank" rel="noreferrer noopener">this form</a>.</p>
+      <p>Found a bug? Let us know <a href="https://docs.google.com/forms/d/e/1FAIpQLSchgQZC0gaWovY3oaZo8sIg5xZtDY2rq_kgzQsKEYsUwSQIsg/viewform" target="_blank" rel="noreferrer noopener">here</a>.</p>
+    </div>
+    <div class="footer-centre">
+      <img class="aston-logo" src="https://static.wixstatic.com/media/f1983f_559f89c66b1640c389ad805709450309~mv2.png/v1/crop/x_0,y_204,w_768,h_364/fill/w_168,h_80,al_c,q_85,enc_auto/aston%20logo%20coloured.png" alt="Aston University" />
+    </div>
+    <div class="footer-right">
+      <a href="https://www.instagram.com/astrafallgame/" target="_blank"><img src="Instagram.png" alt="Instagram" /></a>
+      <a href="https://www.tiktok.com/@astrafallgame" target="_blank"><img src="TikTok.png" alt="TikTok" /></a>
+      <a href="https://www.youtube.com/@AstrafallGame" target="_blank"><img src="YouTube.png" alt="YouTube" /></a>
+    </div>
   </footer>
 
   <!-- FIREBASE -->
