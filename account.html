@@ -28,6 +28,12 @@
 
     header .logo img { height: 48px; width: auto; }
 
+    header nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
     header nav a {
       color: #EBE6FE;
       text-decoration: none;
@@ -38,6 +44,21 @@
     }
 
     header nav a:hover { opacity: 1; }
+
+    header nav button.btn-nav-logout {
+      background: none;
+      border: none;
+      color: #EBE6FE;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0;
+      cursor: pointer;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    header nav button.btn-nav-logout:hover { opacity: 1; }
 
     /* MAIN */
     main {
@@ -205,6 +226,7 @@
     </div>
     <nav>
       <a href="https://astrafallgame.wixsite.com/astrafall">Back to main site</a>
+      <button class="btn-nav-logout" onclick="handleLogout()">Log Out</button>
     </nav>
   </header>
 
@@ -302,7 +324,6 @@
             </div>
           </div>
           <a class="btn-leaderboard" href="leaderboard.html">🏆 View Global Leaderboard</a>
-          <button class="btn-logout" onclick="handleLogout()">Log Out</button>
         </div>
 
         <div class="card">
