@@ -291,25 +291,6 @@
             </tr>`).join("")
         : `<tr><td colspan="3" class="no-scores">No scores yet — go play!</td></tr>`;
 
-      // Leaderboard rows
-      const medalMap = { 1: "🥇", 2: "🥈", 3: "🥉" };
-      const rankClass = { 1: "rank-1", 2: "rank-2", 3: "rank-3" };
-
-      const leaderboardRows = leaderboard.length > 0
-        ? leaderboard.map((entry, i) => {
-            const rank = i + 1;
-            const isYou = entry.userId === user.uid;
-            const medal = medalMap[rank] || rank;
-            const cls = rankClass[rank] || "";
-            return `
-              <tr class="${isYou ? "you-row" : ""}">
-                <td class="${cls}">${medal}</td>
-                <td>${entry.username || "Player"}${isYou ? " <span style='color:#c0b3e8;font-size:0.75rem'>(you)</span>" : ""}</td>
-                <td>${entry.score}</td>
-              </tr>`;
-          }).join("")
-        : `<tr><td colspan="3" class="no-scores">No scores yet — be the first!</td></tr>`;
-
       main.innerHTML = `
         <div class="card">
           <h1>👾 ${user.displayName || "Player"}</h1>
