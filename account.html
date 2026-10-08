@@ -221,7 +221,7 @@
   <header>
     <div class="logo">
       <a href="https://astrafallgame.wixsite.com/astrafall">
-        <img src="ASTRAFALL.png" alt="Astrafall" />
+        <img src="ASTRAFALL-TEXT-LOGO.png" alt="Astrafall" />
       </a>
     </div>
     <nav>
@@ -309,7 +309,7 @@
             <tr>
               <td>${i + 1}</td>
               <td>${s.score}</td>
-              <td>${s.timestamp ? new Date(s.timestamp.seconds * 1000).toLocaleDateString() : "—"}</td>
+              <td>${s.timestamp ? new Date(s.timestamp.seconds * 1000).toLocaleDateString() : "–"}</td>
             </tr>`).join("")
         : `<tr><td colspan="3" class="no-scores">No scores yet – go play!</td></tr>`;
 
